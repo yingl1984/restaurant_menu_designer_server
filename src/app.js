@@ -5,7 +5,7 @@ const morgan = require('morgan')
 const cors = require('cors')
 const helmet = require('helmet')
 const { NODE_ENV, CLIENT_URL} = require('./config')
-const notesRouter = require('./notes/notes-router');
+const menuRouter = require('./menu/menu-router');
 //Create a Express app
 const app = express()
 const morganOption = (NODE_ENV === 'production')
@@ -18,10 +18,10 @@ app.use(
     cors()
 );
 
-app.use('/api/notes', notesRouter);
+app.use('/api/menu', menuRouter);
 
 app.get('/', (req, res) => {
-    res.send('Hello, rental property notebook user!')
+    res.send('Hello, restaurant menu designer user!')
 })
 
 app.use(function errorHandler(error, req, res, next) {
