@@ -1,104 +1,96 @@
 const { expect } = require('chai');
 const knex = require('knex')
 const app = require('../src/app')
-const NotesService = require('../src/notes/note-service');
+const MenuService = require('../src/menu/menu-service');
 
 describe('Notebook Endpoints', () => {
   let db;
   before(()=>{
      db = knex({
       client: 'pg',
-      connection: 'postgresql://dunder_mifflin1:lovebaobao040117@localhost/rental-property-notebook-test',
+      connection: 'postgresql://dunder_mifflin1:lovebaobao040117@localhost/restaurant_menu_designer_test',
     })
   app.set('db', db);
 
   })
   after('disconnect from db', () => db.destroy())
-  before('clean the table', () => db('notebook').truncate())
+  before('clean the table', () => db('menu_list').truncate())
 
-  context('Given there are notes in the database',()=>{
+  context('Given there are dishes in the database',()=>{
   beforeEach(()=>{
-    NotesService.addNewNote(db, 
+    MenuService.addNewDish(db, 
       {
         id: 1,
-        address: '1234 NE 31st Way',
-        state: 'WA',
-        zipcode: '90878',
-        status: 'rent',
-        price: 3200,
-        comments: 'The tenant plan to rent for 2 years above'
+        name: 'bun',
+        price: 1.99,
+        rate: 2,
+        comments: 'Pine apple bun'
        }
       )
-      NotesService.addNewNote(db, 
+      MenuService.addNewDish(db, 
         {
           id: 2,
-          address: '800987 SE 31st Way',
-          state: 'GA',
-          zipcode: '10001',
-          status: 'vacant',
-          price: 0,
-          comments: 'New townhouse'
+          name: 'dumpling',
+          price: 8.99,
+          rate:5,
+          comments: 'Chinese favorite plate'
          }
         )
   })
 
   afterEach(()=>{
-    db('notebook').truncate()
+    db('menu_list').truncate()
   })
 
-  it('GET /api/notes responds with 200 and all of the notes', () => {    
+  it('GET /api/menu responds with 200 and all of the dishes', () => {    
     const dat = supertest(app)
-   .get('/api/notes');
+   .get('/api/menu');
     expect(200);
     expect(dat.length == 2);
-    expect(dat.address, "1234 NE 31st Way");
-    expect(dat.state,"GA");
-    expect(dat.price, 0);
-    expect(dat.comments,"One family with 3 members living in");
-    expect(dat.comments,"New townhouse");
+    expect(dat.name, "bun");
+    expect(dat.rate, 5);
+    expect(dat.price, 8.99);
+    expect(dat.comments,"Chinese");
   })
-  it('GET /api/notes/1 responds with 200 and specific note', () => {    
+  it('GET /api/menu/1 responds with 200 and specific dish', () => {    
     const dat = supertest(app)
-   .get('/api/notes/1');
+   .get('/api/menu/1');
     expect(dat.id == 1)
     
   })
-  it('POST /api/notes, creates an note, responding with 201 and the new note', () => {    
+  it('POST /api/menu, creates a new dish, responding with 201 and the new dish', () => {    
     const dat = supertest(app)
-   .post('/api/notes')
+   .post('/api/menu')
    .send({
     id: 3,
-    address: 'newly posted address',
-    state: 'Fl',
-    zipcode: '99999',
-    status: 'vacant',
-    price: 0,
-    comments: 'newly posted comments'
+    name:'noodle',
+    price: 10.9,
+    rate:5,
+    comments: 'newly posted dish'
    });
     expect(dat.length == 3);
     expect(201);
-    expect(dat.state,"FL");
+    expect(dat.price, 10.9);
     expect(dat.comments,"newly posted comments");
   })
-  it('DELETE /api/notes/1 responds with 200 and specific note', () => {    
+  it('DELETE /api/menu/1 responds with 200 and specific dish', () => {    
     const dat = supertest(app)
-   .delete('/api/notes/1');
-    expect(dat.length == 0);
+   .delete('/api/menu/1');
+    expect(dat.length == 1);
     expect(201);
   })
-  it('PATCH /api/notes/1 responds with 204 and updates the note', () => { 
+  it('PATCH /api/menu/1 responds with 204 and updates the dish', () => { 
     const idToUpdate = 1
-       const updateNote = {
-        address: 'updated note address',
-        state: 'updated note state',
-        status: 'rent',
+       const updateDish = {
+        name:'test patch',
         price: 11111,
-        comments: 'updated note comments'
+        rate:21,
+        comments: 'updated dish comments'
        }   
     const dat = supertest(app)
-   .delete(`/api/notes/${idToUpdate}`)
-   .send(updateNote);
-    expect(dat.length == 0);
+   .delete(`/api/menu/${idToUpdate}`)
+   .send(updateDish);
+    expect(dat.length == 2);
     expect(204);
   })
 
