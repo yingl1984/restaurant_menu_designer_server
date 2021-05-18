@@ -3,7 +3,7 @@ const knex = require('knex')
 const app = require('../src/app')
 const MenuService = require('../src/menu/menu-service');
 
-describe('Notebook Endpoints', () => {
+describe('Restaurant Menu designer Endpoints', () => {
   let db;
   before(()=>{
      db = knex({
