@@ -1,26 +1,50 @@
-# express-boilerplate
+# Restaurant Menu Designer
 
-This is a boilerplate project used for starting new projects!
+Restaurant Menu Design is a tool to design a menu for a restaurant.
+In the menu list page, user will have a clear view of all their dishes in the menu now. They can Add or Delete a dish conveniently.After clicking each dish's link, user will drill down to the detail page to review the dish's detail information. They also can update the detail information of that dish.
 
-## Set up
+Check it out: [Restaurant Menu Designer](https://rental-property-notebook-master-johnakhilomen.vercel.app/).
 
-Complete the following steps to start a new project (NEW-PROJECT-NAME):
+## Usage
+1. Welcome Page
+![Welcome page](/src/images/Welcome.png)
+-   Click the "Start" button to load the menu list.
 
-1. Clone this repository to your local machine `git clone BOILERPLATE-URL NEW-PROJECTS-NAME`
-2. `cd` into the cloned repository
-3. Make a fresh start of the git history for this project with `rm -rf .git && git init`
-4. Install the node dependencies `npm install`
-5. Move the example Environment file to `.env` that will be ignored by git and read by the express server `mv example.env .env`
-6. Edit the contents of the `package.json` to use NEW-PROJECT-NAME instead of `"name": "express-boilerplate",`
+2. Menu List
+![Menu List](/src/images/MenuList.png)
+-   Cilck the dish to navigate to the dish details page.
+-   Click the "Add" button to add a new dish.
+-   Click the "Remove" button to delete a dish.
 
-## Scripts
+2. Dish Details
+![Dish Details](/src/images/DishDetail.png)
+-   Click the "Update" button to update the detail information
 
-Start the application `npm start`
+3. Add a new dish
+![Add a new dish](/src/images/add.png)
 
-Start nodemon for the application `npm run dev`
+## API Documentation
+-   Heroku server
+    > (https://stark-stream-92628.herokuapp.com/)
+-   Get menu list
+    > (https://stark-stream-92628.herokuapp.com/api/menu/api/menu)
+-   Post a dish
+    > (https://stark-stream-92628.herokuapp.com/api/menu/api/menu)
+-   Get/Delete/Update specific dish through id
+    > (https://stark-stream-92628.herokuapp.com/api/menu/api/dish/5)
 
-Run the tests `npm test`
+## The technology I used in this project
+```python
+*   Front-end
 
-## Deploying
+    > JavaScript (ES6 & JSX), React, HTML5, CSS3
 
-When your new project is ready for deployment, add a new Heroku application with `heroku create`. This will make a new git remote called "heroku" and you can then `npm run deploy` which will push to this remote's main branch.
+*   Back-end
+
+    > Node.js, Express, Knex.js,  
+
+*   Others
+
+    > Mocha + Chai + Supertest + Enzyme, RESTful API, Heroku, Vercel
+
+```
