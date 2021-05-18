@@ -11,19 +11,19 @@ const app = express()
 const morganOption = (NODE_ENV === 'production')
   ? 'tiny'
   : 'common';
-
+// Use Morgan, helmet, cors
 app.use(morgan(morganOption))
 app.use(helmet())
 app.use(
     cors()
 );
-
+// Use menuRouter
 app.use('/api/menu', menuRouter);
 
 app.get('/', (req, res) => {
     res.send('Hello, restaurant menu designer user!')
 })
-
+//Error handler
 app.use(function errorHandler(error, req, res, next) {
     let response
     if (NODE_ENV === 'production') {

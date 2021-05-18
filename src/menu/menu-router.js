@@ -2,24 +2,27 @@ const express = require('express');
 const path = require('path');
 const xss = require('xss');
 const MenuService = require('./menu-service');
-
 const menuRouter = express.Router();
 const jsonParser = express.json();
 
+//XSS
 const dishFormat = dish => ({
   id:xss(dish.id),
   name: xss(dish.name),
-  price: xss(dish.price),
+  price: xss(dish.price), 
   rate: xss(dish.rate),
   comments:xss(dish.comments),
 });
 
+// Routes '/'
 menuRouter.route('/')
+//GET all dishes
   .get((req, res, next) => {
     MenuService.getAllDishes( req.app.get('db') )
     .then(menu => { res.json(menu.map(dishFormat)) })
     .catch(next)
   })
+// POST
   .post(jsonParser, (req, res, next) => {
     const { name, price, rate, comments } = req.body;
     const newDishInfo = { name,price};
@@ -42,8 +45,9 @@ menuRouter.route('/')
       })
       .catch(next)
   })
-
+// Routes '/:dish_id'
   menuRouter.route('/:dish_id')
+// .all
     .all((req, res, next) => {
       MenuService.getDishById( req.app.get('db'), req.params.dish_id )
         .then(dish => {
@@ -53,14 +57,17 @@ menuRouter.route('/')
         })
         .catch(next)
     })
+// GET a specific dish
     .get((req, res, next) => {
       return res.json(dishFormat(res.dish))
     })
+// DELETE
     .delete((req, res, next) => {
       MenuService.deleteDish( req.app.get('db'), req.params.dish_id )
       .then(() => { res.status(204).end() })
       .catch(next)
     })
+// PATCH
     .patch(jsonParser, (req, res, next) => {
       const { name, price, rate, comments } = req.body
       const dishToUpdate = { name, price, rate, comments }
