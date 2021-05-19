@@ -6,12 +6,12 @@ In the menu list page, user will have a clear view of all their dishes in the me
 Check it out: [Restaurant Menu Designer](https://menu-designer-projecta.vercel.app/).
 
 ## Project Setup:
-Run `git clone` to clone the project from https://github.com/yingl1984/restaurant_menu_designer_server\
-Then run `npm install`
+-   Run `git clone` to clone the project from https://github.com/yingl1984/restaurant_menu_designer_server
+-   Then run `npm install`
 
 ## API Documentation
 -   Heroku server
-    > (https://stark-stream-92628.herokuapp.com/)
+    > https://stark-stream-92628.herokuapp.com/
 -   Get menu list
     > https://stark-stream-92628.herokuapp.com/api/menu/api/menu
     ![Screen shot for GET ALL endpoint](/src/images/postmanGET_ALL.png)
